@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jogo de Perguntas</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(124, 118, 128);
+      }
+
+      .game-container {
+        display: flex;
+        gap: 20px;
+      }
+
+      .container {
+        width: 720px;
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+      }
+
+      #questionContainer {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        border: 2px solid black;
+        display: none;
+        z-index: 10;
+      }
+
+      #closeQuiz {
+        background: red;
+        color: white;
+        border: none;
+        padding: 5px;
+        cursor: pointer;
+        float: right;
+      }
+
+      .cell {
+        width: 115px;
+        height: 80px;
+        border-radius: 9px;
+        border: 2px solid black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        position: relative;
+      }
+
+      .nocell {
+        background: none;
+        border: none;
+      }
+
+      .quiz-cell {
+        background-color: #ffd700 !important;
+      }
+      #cell-0 {
+        background-color: #bfbfbf;
+      }
+
+      #cell-1,
+      #cell-2,
+      #cell-3 {
+        background-color: #fff;
+      }
+
+      #cell-4,
+      #cell-5,
+      #cell-6 {
+        background-color: #5668d9;
+      }
+
+      #cell-8,
+      #cell-9 {
+        background-color: #a9b50c;
+        background-image: url("image/perigo.png");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 70%;
+      }
+
+      #cell-11,
+      #cell-12,
+      #cell-13 {
+        background-color: #fff;
+      }
+
+      #cell-14,
+      #cell-15,
+      #cell-16 {
+        background-color: #e31e1e;
+      }
+
+      #cell-17,
+      #cell-19 {
+        background-color: #229caf;
+      }
+
+      #cell-20,
+      #cell-21,
+      #cell-22 {
+        background-color: #fff;
+      }
+
+      #cell-25 {
+        background-color: #bfbf55;
+      }
+      #player {
+        width: 500px;
+        height: 500px;
+        background-image: url("./image/patoPula.gif");
+        background-size: 22%;
+        background-repeat: no-repeat;
+        position: absolute;
+        transition: 0.5s ease-in-out;
+        z-index: 9;
+      }
+
+      .info-panel {
+        -margin-left: 45vw;
+        width: 250px;
+        -height: 80vh;
+        -position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        -border: 2px solid black;
+        border-radius: 11px;
+        padding: 40px 10px;
+        background-color: #fff;
+      }
+
+      .question-box {
+        padding: 10px;
+        border: 2px solid black;
+        display: none;
+        text-align: center;
+      }
+      button {
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="game-container">
+      <div class="container">
+        <!-- Div onde a bolinha começa -->
+        <div id="player"></div>
+        <!-- Tabuleiro -->
+        <div class="cell" id="cell-0">Start</div>
+        <div class="cell nocell"></div>
+        <div class="cell" id="cell-6">6</div>
+        <div class="cell quiz-cell" id="cell-7">Quiz!?</div>
+        <div class="cell" id="cell-8">  </div>
+        <div class="cell" id="cell-9"> </div>
+        <div class="cell" id="cell-1">1</div>
+        <div class="cell nocell"></div>
+        <div class="cell" id="cell-5">5</div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell quiz-cell" id="cell-10">Quiz!?</div>
+        <div class="cell" id="cell-2">2</div>
+        <div class="cell quiz-cell" id="cell-3">Quiz!?</div>
+        <div class="cell" id="cell-4">4</div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell" id="cell-11">11</div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell quiz-cell" id="cell-12">Quiz!?</div>
+        <div class="cell quiz-cell" id="cell-18">Quiz!?</div>
+        <div class="cell" id="cell-17">17</div>
+        <div class="cell" id="cell-16">16</div>
+        <div class="cell quiz-cell" id="cell-15">Quiz!?</div>
+        <div class="cell" id="cell-14">14</div>
+        <div class="cell" id="cell-13">13</div>
+        <div class="cell" id="cell-19">19</div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell" id="cell-20">20</div>
+        <div class="cell quiz-cell" id="cell-21">Quiz!?</div>
+        <div class="cell" id="cell-22">22</div>
+        <div class="cell quiz-cell" id="cell-23">Quiz!?</div>
+        <div class="cell" id="cell-24">24</div>
+        <div class="cell" id="cell-25">End</div>
+      </div>
+
+      <div class="info-panel">
+        <div>
+          <button onclick="startGame()">Jogar</button>
+         
+          <p id="timer">Tempo: 0s</p>
+          <p id="diceResult">Valor: ?</p>
+          <p id="currentPositionDisplay"></p>
+          <p id="pontuacao">Pontuação: 100</p>
+
+          <button value="Refresh Page" onClick="window.location.reload()">Reiniciar</button>
+        </div>
+        <div class="question-container" id="questionContainer">
+          <button id="closeQuiz" onclick="closeQuiz()">X</button>
+          <p id="questionText"></p>
+          <form id="questionForm"></form>
+          <p id="feedback"></p>
+        </div>
+      </div>
+    </div>
+    <script>
+      let currentPosition = 0;
+      let startTime = null;
+      let timerInterval = null;
+
+      let gameStarted = false; // Variável para verificar se o jogo já começou
+
+      function startGame() {
+        if (!gameStarted) {
+          gameStarted = true; // Marca o jogo como iniciado
+          startTime = Date.now();
+          timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        // Impede múltiplas chamadas do botão antes de processar o movimento
+        document.querySelector("button").disabled = true;
+
+        rollDice();
+
+        // Reativa o botão após o movimento ser processado
+        setTimeout(() => {
+          document.querySelector("button").disabled = false;
+        }, 1000); // 1 segundo para evitar cliques excessivos
+      }
+
+      function rollDice() {
+        let steps = Math.floor(Math.random() * 6) + 1;
+        document.getElementById("diceResult").innerText = "Valor: " + steps;
+        movePlayer(steps);
+      }
+
+      function movePlayer(steps) {
+        let newPosition = currentPosition + steps;
+        if (newPosition > 25) newPosition = 25;
+        if (newPosition == 8) newPosition = 1;
+        if (newPosition == 9) newPosition = 6;
+
+        let targetCell = document.getElementById(`cell-${newPosition}`);
+        let player = document.getElementById("player");
+
+        if (!targetCell || targetCell.classList.contains("nocell")) {
+          console.warn(`Célula ${newPosition} inválida. Mantendo posição.`);
+          return;
+        }
+
+        let rect = targetCell.getBoundingClientRect();
+        let parentRect = document
+          .querySelector(".container")
+          .getBoundingClientRect();
+
+        player.style.left = rect.left - parentRect.left + "px";
+        player.style.top = rect.top - parentRect.top + "px";
+
+        setTimeout(() => {
+          currentPosition = newPosition;
+          document.getElementById("currentPositionDisplay").innerText =
+            "Posição Atual: " + currentPosition;
+
+          // Exibe o quiz se for uma célula de quiz
+          if (targetCell.classList.contains("quiz-cell")) {
+            showQuiz();
+          }
+
+          // Alerta final do jogo
+
+          if (currentPosition === 25) {
+            clearInterval(timerInterval);
+            let pontuacaoFinal = calcularPontuacaoFinal();
+            let tempoFinal = document.getElementById("timer").innerText;
+            alert(
+              `Parabéns! Você completou o jogo em ${tempoFinal} segundos.\nSua pontuação final é: ${pontuacaoFinal.toFixed(
+                2
+              )}`
+            );
+          }
+        }, 500);
+      }
+
+      function updateTimer() {
+        if (startTime) {
+          let elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+          document.getElementById("timer").innerText =
+            "Tempo: " + elapsedSeconds + "s";
+        }
+      }
+
+      // Lista de perguntas e respostas
+      const quizQuestions = [
+        {
+          question:
+            "Qual é a principal molécula responsável pelo armazenamento de energia nas células?",
+          options: ["Glicose", "ATP", "Proteína", "DNA"],
+          correctAnswer: "ATP",
+        },
+        {
+          question: "Qual desses é um exemplo de ácido nucleico?",
+          options: ["Hemoglobina", "Insulina", "DNA", "Triglicerídeos"],
+          correctAnswer: "DNA",
+        },
+        {
+          question: "O que significa a sigla DNA?",
+          options: [
+            "Derivado Nuclear Ácido",
+            "Ácido Desoxirribonucleico",
+            "Ácido Dinuclear Atômico",
+            "Nenhuma das anteriores",
+          ],
+          correctAnswer: "Ácido Desoxirribonucleico",
+        },
+        {
+          question: "Qual é o resultado de 7²?",
+          options: ["14", "49", "21", "64"],
+          correctAnswer: "49",
+        },
+        {
+          question:
+            "Se um triângulo tem ângulos de 45° e 45°, qual é o terceiro ângulo?",
+          options: ["60°", "45°", "90°", "75°"],
+          correctAnswer: "90°",
+        },
+        {
+          question: "Qual é o logaritmo de 100 na base 10?",
+          options: ["1", "10", "2", "100"],
+          correctAnswer: "2",
+        },
+        {
+          question: "Qual é o número atômico do Oxigênio?",
+          options: ["6", "7", "8", "9"],
+          correctAnswer: "8",
+        },
+        {
+          question: "Qual é o nome do composto H₂SO₄?",
+          options: [
+            "Ácido clorídrico",
+            "Ácido sulfúrico",
+            "Ácido nítrico",
+            "Ácido carbônico",
+          ],
+          correctAnswer: "Ácido sulfúrico",
+        },
+        {
+          question: "O que significa pH 7 em uma solução?",
+          options: [
+            "Solução ácida",
+            "Solução neutra",
+            "Solução básica",
+            "Solução oxidante",
+          ],
+          correctAnswer: "Solução neutra",
+        },
+        {
+          question:
+            "Qual é o nome do tecido que reveste a superfície externa do corpo?",
+          options: [
+            "Tecido Conjuntivo",
+            "Tecido Epitelial",
+            "Tecido Ósseo",
+            "Tecido Muscular",
+          ],
+          correctAnswer: "Tecido Epitelial",
+        },
+        {
+          question: "Qual é a principal célula do tecido ósseo?",
+          options: ["Fibroblasto", "Osteócito", "Condrócito", "Neurônio"],
+          correctAnswer: "Osteócito",
+        },
+        {
+          question: "Qual é a proteína responsável pela contração muscular?",
+          options: ["Hemoglobina", "Queratina", "Actina", "Colágeno"],
+          correctAnswer: "Actina",
+        },
+      ];
+
+      function showQuiz() {
+        let randomIndex = Math.floor(Math.random() * quizQuestions.length);
+        let questionData = quizQuestions[randomIndex];
+
+        let questionContainer = document.getElementById("questionContainer");
+        let questionText = document.getElementById("questionText");
+        let questionForm = document.getElementById("questionForm");
+        let feedback = document.getElementById("feedback");
+
+        questionForm.innerHTML = "";
+        feedback.innerText = "";
+        questionText.innerText = questionData.question;
+
+        questionData.options.forEach((option) => {
+          let label = document.createElement("label");
+          let radio = document.createElement("input");
+
+          radio.type = "radio";
+          radio.name = "quizAnswer";
+          radio.value = option;
+
+          label.appendChild(radio);
+          label.appendChild(document.createTextNode(" " + option));
+          questionForm.appendChild(label);
+          questionForm.appendChild(document.createElement("br"));
+        });
+
+        let answerButton = document.createElement("button");
+        answerButton.innerText = "RESPONDER";
+        answerButton.onclick = function (event) {
+          event.preventDefault();
+          checkAnswer(questionData.correctAnswer);
+        };
+
+        questionForm.appendChild(answerButton);
+
+        questionContainer.style.display = "block";
+      }
+
+      let pontuacao = 100;
+
+      function checkAnswer(correctAnswer) {
+        let selectedOption = document.querySelector(
+          "input[name='quizAnswer']:checked"
+        );
+        let feedback = document.getElementById("feedback");
+
+        if (!selectedOption) {
+          feedback.innerText = "Por favor, selecione uma resposta!";
+          return;
+        }
+
+        let userAnswer = selectedOption.value;
+
+        if (userAnswer === correctAnswer) {
+          feedback.innerText =
+            "✅ ACERTOU! A resposta correta é: " + correctAnswer;
+          feedback.style.color = "green";
+          pontuacao += 1; // Soma 1 ponto em caso de acerto
+        } else {
+          feedback.innerText =
+            "❌ ERROU! A resposta correta era: " + correctAnswer;
+          feedback.style.color = "red";
+          pontuacao -= 1; // Diminui 1 ponto em caso de erro
+        }
+
+        document.getElementById("pontuacao").innerText =
+          "Pontuação: " + pontuacao;
+      }
+
+      function calcularPontuacaoFinal() {
+        let tempoFinal = Math.floor((Date.now() - startTime) / 1000);
+        let pontuacaoFinal = pontuacao * ((1 / (tempoFinal + 1)) * 100);
+
+        document.getElementById(
+          "pontuacao"
+        ).innerText = `Pontuação Final: ${pontuacaoFinal.toFixed(
+          2
+        )} (Base: ${pontuacao}, Tempo: ${tempoFinal}s)`;
+
+        return pontuacaoFinal;
+      }
+
+      // Modifica o alerta ao finalizar o jogo
+      if (currentPosition === 25) {
+        clearInterval(timerInterval);
+        let pontuacaoFinal = calcularPontuacaoFinal();
+        alert(
+          `Parabéns! Você completou o jogo em ${tempoFinal} segundos.\nSua pontuação final é: ${pontuacaoFinal.toFixed(
+            2
+          )}`
+        );
+      }
+
+      
+
+      function closeQuiz() {
+        document.getElementById("questionContainer").style.display = "none";
+      }
+    </script>
+  </body>
+</html>
