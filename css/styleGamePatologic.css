@@ -22,16 +22,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 3rem 1rem;
+    padding: 1.2rem 1rem;
+    border-bottom: 4px solid white;
   }
 
   .logo{
-    width: 80px;
+    width: 120px;
   }
 
   .titulo{
     color: #fff;   
-    padding: 1rem; 
+    font-size: 3.1rem;
+    padding: 2rem; 
   }    
 
   .gameContainer {
@@ -286,6 +288,13 @@
 
 
   @media (max-width: 480px){
+    .logo {
+      width: 90px;
+    }
+   
+    .titulo{
+      font-size: 1.6rem;
+    }
     .cell{
         width: 58px;
         height: 60px;
