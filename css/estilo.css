@@ -1,0 +1,147 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+   
+  }
+
+  @font-face {
+    font-family: 'CaviarDreams';
+    src: url('../fonts/Caviar-Dreams/CaviarDreams.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  body {    
+    background-color: rgb(124, 118, 128);
+  }
+
+  nav{
+    width: 100vww;
+    height: 100px;
+    background-color: #60c91e;
+    display: flex;
+    align-items: center;
+    justify-content:space-around;
+    font-family: 'CaviarDreams', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+ }
+
+
+
+  .game-container {
+    display: flex;
+    gap: 20px;
+    border: 2px solid white;
+  }
+
+  .container {
+    width: 720px;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    border: 2px solid white;
+  }
+
+  .cell {
+    width: 115px;
+    height: 80px;
+    border-radius: 9px;
+    border: 2px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    position: relative;
+  }
+
+  .nocell {
+    background: none;
+    border: none;
+  }
+
+  .quiz-cell {
+    background-color: #ffd700 !important;
+  }
+  #cell-0 {
+    background-color: #bfbfbf;
+  }
+
+  #cell-1,
+  #cell-2,
+  #cell-3 {
+    background-color: #fff;
+  }
+
+  #cell-4,
+  #cell-5,
+  #cell-6 {
+    background-color: #5668d9;
+  }
+
+  #cell-8,
+  #cell-9 {
+    background-color: #a9b50c;
+  }
+
+  #cell-11,
+  #cell-12,
+  #cell-13 {
+    background-color: #fff;
+  }
+
+  #cell-14,
+  #cell-15,
+  #cell-16 {
+    background-color: #e31e1e;
+  }
+
+  #cell-17,
+  #cell-19 {
+    background-color: #229caf;
+  }
+
+  #cell-20,
+  #cell-21,
+  #cell-22 {
+    background-color: #fff;
+  }
+
+  #cell-25 {
+    background-color: #bfbf55;
+  }
+  #player {
+    width: 500px;
+    height: 500px;
+    background-image: url("./image/patoPula.gif");
+    background-size: 22%;
+    background-repeat: no-repeat;
+    position: absolute;
+    transition: 0.5s ease-in-out;
+    z-index: 9;
+  }
+
+  .info-panel {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    -border: 2px solid black;
+    border-radius: 11px;
+    padding: 10px;
+    background-color: #fff;
+  }
+
+  .question-box {
+    padding: 10px;
+    border: 2px solid black;
+    display: none;
+    text-align: center;
+  }
+  button {
+    padding: 5px 10px;
+    cursor: pointer;
+  }

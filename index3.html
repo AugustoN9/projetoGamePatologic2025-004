@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Perguntas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .game-container {
+            display: flex;
+            gap: 20px;
+        }
+        .container {
+            width: 720px;
+            display: flex;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .cell {
+            background-color: #AA90B1;
+            width: 115px;
+            height: 80px;
+            border-radius: 9px;
+            border: 2px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+        }
+        .nocell {
+            background: none;
+            border: none;
+        }
+
+        #player {
+            width: 500px;
+            height: 500px;            
+            background-image:url("image/patoPula.gif");
+            background-size: 22%;
+            background-repeat: no-repeat;
+            position: absolute;
+            transition: 0.5s ease-in-out;
+            z-index: 9;
+        }
+      
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <div class="container">
+        <div id="player"></div>
+        
+        <!-- Criando células de 0 a 25 -->
+        <script>
+            for (let i = 0; i <= 25; i++) {
+                document.write(`<div class='cell' id='cell-${i}'>${i}</div>`);
+            }
+        </script>
+    </div>
+    <div>
+        <button onclick="rollDice()">Jogar</button>
+        <p id="diceResult">Valor: ?</p>
+        <p id="currentPositionDisplay">Posição Atual: 0</p>
+    </div>
+</div>
+<script>
+    let currentPosition = 0;
+
+    function rollDice() {
+        let steps = Math.floor(Math.random() * 6) + 1;
+        document.getElementById("diceResult").innerText = "Valor: " + steps;
+        movePlayer(steps);
+    }
+
+    function movePlayer(steps) {
+        let newPosition = currentPosition + steps;
+        if (newPosition > 25) newPosition = 25;
+
+        let targetCell = document.getElementById(`cell-${newPosition}`);
+        let player = document.getElementById("player");
+
+        if (targetCell) {
+            let rect = targetCell.getBoundingClientRect();
+            let parentRect = document.querySelector(".container").getBoundingClientRect();
+            player.style.left = rect.left - parentRect.left + "px";
+            player.style.top = rect.top - parentRect.top + "px";
+            currentPosition = newPosition;
+            document.getElementById("currentPositionDisplay").innerText = "Posição Atual: " + currentPosition;
+        }
+    }
+</script>
+</body>
+</html>

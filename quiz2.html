@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quiz Interativo - Anatomia Patológica</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+    }
+    .quiz-container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #1f2937;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .answers button {
+      display: block;
+      margin: 5px 0;
+      padding: 10px;
+      width: 100%;
+      background: #e5e7eb;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .answers button:hover {
+      background: #d1d5db;
+    }
+    .correct {
+      background: #bbf7d0 !important;
+    }
+    .incorrect {
+      background: #fecaca !important;
+    }
+    #feedback {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    #result {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>Quiz - Anatomia Patológica</h1>
+    <div id="quiz"></div>
+    <div id="feedback"></div>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        q: "O que deve ser verificado na recepção de amostras para exame anatomopatológico?",
+        a: ["Identificação do paciente e da amostra", "Apenas o nome do médico", "Somente o tipo de exame", "Data de nascimento apenas"],
+        correct: 0
+      },
+      {
+        q: "Por que a validação das informações da requisição é essencial?",
+        a: ["Para manter o controle de estoque", "Para evitar erros de identificação", "Para armazenar amostras por mais tempo", "Para fins estatísticos"],
+        correct: 1
+      },
+      {
+        q: "O que fazer se uma amostra estiver sem identificação ou com informações incompletas?",
+        a: ["Continuar o exame normalmente", "Descartar imediatamente", "Manter em quarentena e comunicar o setor", "Corrigir por conta própria"],
+        correct: 2
+      },
+      {
+        q: "Qual a finalidade da formalina a 10% tamponada?",
+        a: ["Realçar a coloração do tecido", "Eliminar fungos", "Preservar morfologia e estrutura do tecido", "Estabilizar DNA"],
+        correct: 2
+      },
+      {
+        q: "Qual a proporção ideal entre volume de tecido e volume de formol?",
+        a: ["1:2", "1:5", "1:10", "1:1"],
+        correct: 2
+      },
+      {
+        q: "Qual o tempo ideal de fixação para não interferir na imunoistoquímica?",
+        a: ["1 hora", "2-4 horas", "6 a 48 horas", "72 horas"],
+        correct: 2
+      },
+      {
+        q: "Quais são os componentes da coloração HE?",
+        a: ["Hematoxilina e eosina", "Hemoglobina e elastina", "Hematina e etanol", "Eosina e azul de metileno"],
+        correct: 0
+      },
+      {
+        q: "Que coloração é utilizada para identificação de fungos?",
+        a: ["Ziehl-Neelsen", "HE", "PAS e GMS", "Gram"],
+        correct: 2
+      },
+      {
+        q: "Qual coloração especial pode ser usada para bactérias álcool-ácido resistentes?",
+        a: ["PAS", "Ziehl-Neelsen", "Tricrômico de Masson", "Azul de Alcian"],
+        correct: 1
+      },
+      {
+        q: "O que deve ser descrito na macroscopia de uma peça cirúrgica?",
+        a: ["Apenas a presença de tumor", "Nome do médico", "Tamanho, forma, cor, lesões", "Peso corporal do paciente"],
+        correct: 2
+      },
+      {
+        q: "Qual a importância da orientação correta da peça cirúrgica?",
+        a: ["Facilita o corte", "Avaliação precisa das margens e localização", "Evita contaminação", "Auxilia na pesagem"],
+        correct: 1
+      },
+      {
+        q: "Como as biópsias devem ser manipuladas na macroscopia?",
+        a: ["De forma aleatória", "Medidas, descritas e identificadas", "Cortadas com bisturi elétrico", "Apenas fixadas"],
+        correct: 1
+      },
+      {
+        q: "Quais são as etapas do histoprocessamento?",
+        a: ["Coloração e montagem", "Fixação, desidratação, diafanização, impregnação, inclusão", "Leitura e arquivamento", "Centrifugação e secagem"],
+        correct: 1
+      },
+      {
+        q: "O que é o micrótomo?",
+        a: ["Corante especial", "Equipamento para cortar tecidos", "Microscópio antigo", "Estufa de secagem"],
+        correct: 1
+      },
+      {
+        q: "Qual a função do banho histológico?",
+        a: ["Desidratar lâminas", "Esticar secções e remover dobras", "Fixar coloração", "Secar tecidos"],
+        correct: 1
+      },
+      {
+        q: "Quais são as partes principais de um microscópio óptico?",
+        a: ["Estufa e lâmina", "Tubo, objetivas, oculares, platina, condensador", "Scanner e lente", "Bomba de vácuo e luz UV"],
+        correct: 1
+      },
+      {
+        q: "Qual o princípio do microscópio óptico?",
+        a: ["Eletromagnetismo", "Raio-X", "Luz visível e lentes", "Campo magnético"],
+        correct: 2
+      },
+      {
+        q: "O que é necessário para interpretar uma lâmina histológica?",
+        a: ["Cor e cheiro do tecido", "Conhecimento morfológico e colorações específicas", "Micrótomo adequado", "Fixador correto"],
+        correct: 1
+      },
+      {
+        q: "O que é imunoistoquímica?",
+        a: ["Técnica de coloração HE", "Análise por PCR", "Detecção de antígenos com anticorpos", "Extração de DNA"],
+        correct: 2
+      },
+      {
+        q: "Qual a diferença entre IF direta e indireta?",
+        a: ["Direta não usa anticorpo", "Indireta é mais rápida", "Direta usa anticorpo com fluorocromo, indireta usa anticorpo secundário", "São iguais"],
+        correct: 2
+      },
+      {
+        q: "O que é FISH?",
+        a: ["Coloração com azul de metileno", "Fixação com formol", "Hibridização fluorescente para detectar alterações genéticas", "Técnica de fixação proteica"],
+        correct: 2
+      },
+      {
+        q: "Qual o papel do médico patologista?",
+        a: ["Processar tecidos", "Emitir laudos e diagnosticar", "Colorir lâminas", "Fazer biópsias"],
+        correct: 1
+      },
+      {
+        q: "Qual a função do técnico em histopatologia?",
+        a: ["Diagnosticar doenças", "Realizar colorações, cortes, arquivamento", "Operar ressonância", "Prescrever exames"],
+        correct: 1
+      },
+      {
+        q: "Como deve ser a interação entre técnico e patologista?",
+        a: ["Independente", "Apenas por laudo", "Colaborativa e precisa", "Sem comunicação"],
+        correct: 2
+      },
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    // Embaralha as perguntas
+    questions.sort(() => Math.random() - 0.5);
+
+    function showQuestion() {
+      if (current >= questions.length) {
+        document.getElementById('quiz').innerHTML = '';
+        document.getElementById('feedback').innerText = '';
+        document.getElementById('result').innerText = `Você acertou ${score} de ${questions.length} perguntas.`;
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class="question"><strong>${current + 1}. ${q.q}</strong></div><div class="answers">`;
+
+      q.a.forEach((answer, index) => {
+        html += `<button onclick="checkAnswer(${index})">${answer}</button>`;
+      });
+
+      html += `</div>`;
+      document.getElementById('quiz').innerHTML = html;
+    }
+
+    function checkAnswer(selected) {
+      const q = questions[current];
+      const buttons = document.querySelectorAll(".answers button");
+      const feedbackDiv = document.getElementById("feedback");
+
+      buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === q.correct) btn.classList.add("correct");
+        else if (i === selected) btn.classList.add("incorrect");
+      });
+
+      if (selected === q.correct) {
+        score++;
+        feedbackDiv.innerText = "✅ Você acertou!";
+        feedbackDiv.style.color = "#16a34a"; // verde
+      } else {
+        feedbackDiv.innerText = `❌ Você errou. A resposta correta é: "${q.a[q.correct]}"`;
+        feedbackDiv.style.color = "#dc2626"; // vermelho
+      }
+
+      setTimeout(() => {
+        current++;
+        feedbackDiv.innerText = "";
+        showQuestion();
+      }, 2000);
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
