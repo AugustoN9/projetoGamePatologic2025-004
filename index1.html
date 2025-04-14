@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jogo de Perguntas</title>
+    <link rel="stylesheet" href="css/estilo.css">
+   
+  </head>
+  <body>
+    <header>
+      <nav>
+        <button>Jogar</button>
+        <div class="valorDado"><img src="./image/dado.png" alt="" width="60px"> 1 </div>
+        <div class="casas"> <img src="./image/casas.png" alt="" width="60px"> 2</div>
+        <div class="pontos"> <img src="./image/pontos.png" alt="" width="90px" > 100</div>
+        <div class="tempo"> <img src="./image/tempo.png" alt="" width="60px">  25s</div>
+      </nav>
+    </header>
+    <div class="container">
+      <div class="container">
+        <!-- Div onde a bolinha começa 
+        <div id="player"></div>
+        <-- Tabuleiro 
+        <div class="cell" id="cell-0">Start</div>
+        <div class="cell nocell"></div>
+        <div class="cell" id="cell-6">6</div>
+        <div class="cell quiz-cell" id="cell-7">Quiz!?</div>
+        <div class="cell" id="cell-8">8</div>
+        <div class="cell" id="cell-9">9</div>
+        <div class="cell" id="cell-1">1</div>
+        <div class="cell nocell"></div>
+        <div class="cell" id="cell-5">5</div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell quiz-cell" id="cell-10">Quiz!?</div>
+        <div class="cell" id="cell-2">2</div>
+        <div class="cell" id="cell-3">3</div>
+        <div class="cell" id="cell-4">4</div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell" id="cell-11">11</div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell" id="cell-12">12</div>
+        <div class="cell quiz-cell" id="cell-18">Quiz!?</div>
+        <div class="cell" id="cell-17">17</div>
+        <div class="cell" id="cell-16">16</div>
+        <div class="cell" id="cell-15">15</div>
+        <div class="cell" id="cell-14">14</div>
+        <div class="cell" id="cell-13">13</div>
+        <div class="cell" id="cell-19">19</div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell nocell"></div>
+        <div class="cell" id="cell-20">20</div>
+        <div class="cell" id="cell-21">21</div>
+        <div class="cell" id="cell-22">22</div>
+        <div class="cell quiz-cell" id="cell-23">Quiz!?</div>
+        <div class="cell" id="cell-24">24</div>
+        <div class="cell" id="cell-25">End</div>
+      </div>
+      -->
+
+      <div class="info-panel">
+        <div>
+          <button onclick="startGame()">Jogar</button>
+          <p id="timer">Tempo: 0s</p>
+          <p id="diceResult">Valor: ?</p>
+          <p id="currentPositionDisplay">Posição Atual: 0</p>
+          <p id="pontuacao">Pontuacao:</p>
+        </div>
+        <div class="question-container" id="questionContainer">
+          <p id="questionText"></p>
+          <form id="questionForm"></form>
+          <button onclick="checkAnswer()">Responder</button>
+          <p id="feedback"></p>
+        </div>
+      </div>
+    </div>
+    
+    <script src="js/script1.js"></script>
+  </body>
+</html>
